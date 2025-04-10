@@ -441,33 +441,6 @@ function FlowChart() {
     }
   };
 
-  const sortNodes = useCallback(() => {
-    const sortedNodes = [...nodes].sort((a, b) => {
-      return a.position.y - b.position.y;
-    });
-
-    sortedNodes.forEach((node, index) => {
-      node.position.y = index * 120 + 50;
-      node.position.x = 100;
-    });
-
-    setNodes(sortedNodes);
-
-    if (sortedNodes.length > 1) {
-      const newEdges = [];
-      for (let i = 0; i < sortedNodes.length - 1; i++) {
-        newEdges.push({
-          id: `e${sortedNodes[i].id}-${sortedNodes[i + 1].id}`,
-          source: sortedNodes[i].id,
-          target: sortedNodes[i + 1].id,
-          animated: true,
-          style: { stroke: "#64748b", strokeWidth: 2 },
-        });
-      }
-      setEdges(newEdges);
-    }
-  }, [nodes]);
-
   useEffect(() => {
     if (nodes.length === 0) {
       handleAddNode();
@@ -540,14 +513,6 @@ function FlowChart() {
         >
           <Plus size={18} className="mr-1" />
           Add Node
-        </button>
-
-        <button
-          onClick={sortNodes}
-          className="flex items-center px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600"
-        >
-          <MessageSquare size={18} className="mr-1" />
-          Reorganize Flow
         </button>
 
         <button
